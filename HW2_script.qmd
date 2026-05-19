@@ -59,3 +59,8 @@ summary_table <- tempdata |>
 write.csv(summary_table, here("site_temp_summary_table.csv"))
 ```
 
+Summary of Temp Analyses
+```{r}
+
+```
+
