@@ -39,6 +39,7 @@ here()
 tempdata <- read.csv(here("tempdata.csv"))
 ```
 
+Plot data & Calculate Summary Statistics
 ```{r}
 # check by plotting
 ggplot(temp_data, aes(x=Date, y=temp_C, color=site_no)) +
@@ -46,6 +47,8 @@ geom_line() +
 labs(title="Stream Temperature at Willamette River Sites",
 x="Date", y="Temperature (°C)", color="Site Number") +
 theme_minimal()
+
+# generate summary stats
 
 ```
 
