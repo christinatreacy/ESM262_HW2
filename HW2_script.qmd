@@ -42,13 +42,41 @@ tempdata <- read.csv(here("tempdata.csv"))
 Plot data & Calculate Summary Statistics
 ```{r}
 # check by plotting
-ggplot(temp_data, aes(x=Date, y=temp_C, color=site_no)) +
+ggplot(tempdata, aes(x=Date, y=temp_C, color=site_no)) +
 geom_line() +
 labs(title="Stream Temperature at Willamette River Sites",
 x="Date", y="Temperature (°C)", color="Site Number") +
 theme_minimal()
 
 # generate summary stats
-
+summary_table <- tempdata |>
+  group_by(site_no) |>
+  summarize(min=min(temp_C), 
+            mean=mean(temp_C),
+            med=median(temp_C),
+            max=max(temp_C),
+            st_dev=sd(temp_C)) 
+write.csv(summary_table, here("site_temp_summary_table.csv"))
 ```
+
+Trends in Water Temperature
+a) is there a trend? 
+b) is the slope (trend) positive (increasing) or negative (decreasing)?
+c) are there differences between sites?
+
+```{r}
+# filter for August temperatures
+aug_data <- subset(temp_data, month == "Aug")
+
+# fit a GLM model to see if there is a trend in August temperatures over time, separated by sit
+aug_model <- glm(temp_C ~ year*site_no, data = aug_data)
+summary(aug_model)
+```
+
+Estimate for year tells you slope for first site: 0.12975
+
+Estimate for year:site_no14211010 (0.04627), year:site_no14211720 (0.01619) tells you how much greater (if positive) slope is for this site relative to first site: 
+
+Estimates for Intercept (-243.03103) and site_no14211010 (-91.98714), site_no14211010 (-28.41636) set the baseline temperature to make regression work. You won’t use these. (An easier way to look at differences in mean temperature across sites is to calculate means for each)
+
 
