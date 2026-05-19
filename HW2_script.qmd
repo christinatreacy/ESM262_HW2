@@ -52,3 +52,18 @@ theme_minimal()
 
 ```
 
+```{r}
+# filter for August temperatures
+feb_data <- subset(temp_data, month == "Feb")
+
+# fit a GLM model to see if there is a trend in August temperatures over time, separated by sit
+feb_model <- glm(temp_C ~ year*site_no, data = feb_data)
+summary(feb_model)
+
+```
+
+Estimate for year tells you slope for first site:  -0.064277
+
+Estimate for year:site_no14211010 (0.019204), year:site_no14211720 (0.004215) tells you how much greater (if positive) slope is for this site relative to first site 
+
+Estimates for Intercept (136.647423) and site_no14211010 (-40.061916), site_no14211010 (-8.440431) set the baseline temperature to make regression work. You won’t use these. (An easier way to look at differences in mean temperature across sites is to calculate means for each)
