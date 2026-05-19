@@ -49,6 +49,13 @@ x="Date", y="Temperature (°C)", color="Site Number") +
 theme_minimal()
 
 # generate summary stats
-
+summary_table <- tempdata |>
+  group_by(site_no) |>
+  summarize(min=min(temp_C), 
+            mean=mean(temp_C),
+            med=median(temp_C),
+            max=max(temp_C),
+            st_dev=sd(temp_C)) 
+write.csv(summary_table, here("site_temp_summary_table.csv"))
 ```
 
